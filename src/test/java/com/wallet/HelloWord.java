@@ -1,15 +1,14 @@
 package com.wallet;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-@ActiveProfiles("test")
-class WalletApplicationTests {
-
+public class HelloWord {
+	
 	@Test
-	void contextLoads() {
+	public void testHelloWord() {
+		Assertions.assertEquals(1, 1);
 	}
-
 }
