@@ -1,4 +1,4 @@
-package com.wallet.repository;
+package com.wallet.repositories;
 
 import java.util.Optional;
 
@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.wallet.entities.User;
+import com.wallet.repositories.UserRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")
