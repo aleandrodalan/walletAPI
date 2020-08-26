@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wallet.dto.UserDTO;
-import com.wallet.entities.User;
+import com.wallet.entities.Users;
 import com.wallet.response.Response;
 import com.wallet.services.UserService;
+import com.wallet.util.Bcrypt;
 
 @RestController
 @RequestMapping("/user")
@@ -27,28 +28,34 @@ public class UserController {
 	public ResponseEntity<Response<UserDTO>> create(@Valid @RequestBody UserDTO dto, BindingResult result) {
 		Response<UserDTO> response = new Response<>();
 		
-		User user = userService.salvar(convertDTOToEntity(dto));
+		if (result.hasErrors()) {
+			result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		Users user = userService.salvar(convertDTOToEntity(dto));
 		
 		response.setData(convertEntityToDTO(user));
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	
-	private User convertDTOToEntity(UserDTO dto) {
-		return User
+	private Users convertDTOToEntity(UserDTO dto) {
+		return Users
 				.builder()
+				.id(dto.getId())
 				.email(dto.getEmail())
 				.name(dto.getName())
-				.password(dto.getPassword())
+				.password(Bcrypt.getHash(dto.getPassword()))
 				.build();
 	}
 	
-	private UserDTO convertEntityToDTO(User user) {
+	private UserDTO convertEntityToDTO(Users user) {
 		return UserDTO
 				.builder()
+				.id(user.getId())
 				.email(user.getEmail())
 				.name(user.getName())
-				.password(user.getPassword())
 				.build();				
 	}
 	

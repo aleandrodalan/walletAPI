@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wallet.entities.User;
+import com.wallet.entities.Users;
 import com.wallet.repositories.UserRepository;
 import com.wallet.services.UserService;
 
@@ -16,12 +16,12 @@ public class UserServiceImpl implements UserService {
 	private UserRepository repository;
 	
 	@Override
-	public User salvar(User u) {
+	public Users salvar(Users u) {
 		return repository.save(u);
 	}
 
 	@Override
-	public Optional<User> buscarPorEmail(String email) {
+	public Optional<Users> buscarPorEmail(String email) {
 		return repository.findByEmailEquals(email);
 	}
 }

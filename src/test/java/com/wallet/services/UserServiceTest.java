@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.wallet.entities.User;
+import com.wallet.entities.Users;
 import com.wallet.repositories.UserRepository;
 
 @SpringBootTest
@@ -27,12 +27,12 @@ public class UserServiceTest {
 	
 	@BeforeEach
 	public void setUp() {
-		BDDMockito.given(repository.findByEmailEquals(Mockito.anyString())).willReturn(Optional.of(new User()));
+		BDDMockito.given(repository.findByEmailEquals(Mockito.anyString())).willReturn(Optional.of(new Users()));
 	}
 	
 	@Test
 	public void testFindByEmail() {
-		Optional<User> user = service.buscarPorEmail("email@teste.com");
+		Optional<Users> user = service.buscarPorEmail("email@teste.com");
 		
 		Assertions.assertTrue(user.isPresent());
 	}
